@@ -3,6 +3,8 @@
 
 #include "Stroke.h"
 #include "Components/SplineMeshComponent.h"
+#include "Components/InstancedStaticMeshComponent.h"
+
 
 // Sets default values
 AStroke::AStroke()
@@ -12,45 +14,54 @@ AStroke::AStroke()
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
+	StrokeMeshes = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("StrokeMeshes"));
+	StrokeMeshes->SetupAttachment(Root);
 }
 
 void AStroke::Update(FVector CursorLocation)
 {
-	// 
-	USplineMeshComponent *Spline = CreateSplineMesh();
+	FTransform NewStrokeTransform;
 
-	// we can just get the transform because we know the spline is at the root of our handle controller
-	// transforming the cursor location which is in global space to local space. The stroke is local to the handle controller
-	FVector StartPosition = GetActorTransform().InverseTransformPosition(CursorLocation);
+	// need to do this because the instance transform is in local space
+	FVector LocalCursorLocation = GetTransform().InverseTransformPosition(CursorLocation);
+
+	NewStrokeTransform.SetLocation(LocalCursorLocation);
 	
-	// the things that was last updated
-	// we can use the previous cursor and update it after the end of the updatings
-	FVector EndPosition = GetActorTransform().InverseTransformPosition(PreviousCursorLocation);
-
-	Spline->SetStartAndEnd(StartPosition, FVector::ZeroVector, EndPosition, FVector::ZeroVector);
+	StrokeMeshes->AddInstance(NewStrokeTransform);	 	
 
 	PreviousCursorLocation = CursorLocation;
 }
 
-USplineMeshComponent * AStroke::CreateSplineMesh()
+FTransform AStroke::GetNextSegmentTransform(FVector CurrentLocation) const
 {
+	FTransform SegmentTransform;
 
-	USplineMeshComponent * NewSpline = NewObject<USplineMeshComponent>(this);
-	NewSpline->SetMobility(EComponentMobility::Movable);	
-	NewSpline->AttachToComponent(Root, FAttachmentTransformRules::SnapToTargetIncludingScale);	
-	NewSpline->SetStaticMesh(SplineMesh);
-	NewSpline->SetMaterial(0, SplineMaterial);
-	NewSpline->RegisterComponent();
+	// all of these will be in local space
+	SegmentTransform.SetScale3D(GetNextSegmentScale(CurrentLocation));
+	SegmentTransform.SetRotation(GetNextSegmentRotation(CurrentLocation));
+	SegmentTransform.SetLocation(GetNextSegmentLocation(CurrentLocation));
 
-	return NewSpline;
+	// need to set the rotation & scale
 
-	//
 
-	//FVector startLocation, startTangent;
-	//FVector endLocation, endTangent;
-
-	//TeleportPath->GetLocalLocationAndTangentAtSplinePoint(i, startLocation, startTangent);
-	//TeleportPath->GetLocalLocationAndTangentAtSplinePoint(i + 1, endLocation, endTangent);
-
-	//SplineMesh->SetStartAndEnd(startLocation, FVector, endLocation, endTangent);
+	return SegmentTransform;
 }
+
+FVector AStroke::GetNextSegmentScale(FVector CurrentLocation) const
+{
+	return FVector();
+}
+
+FQuat AStroke::GetNextSegmentRotation(FVector CurrentLocation) const
+{
+	return FQuat();
+}
+
+FVector AStroke::GetNextSegmentLocation(FVector CurrentLocation) const
+{
+	// next segment will need to convert the previous location world space to local space
+	return GetTransform().InverseTransformPosition(PreviousCursorLocation);
+}
+
+
+
