@@ -20,14 +20,13 @@ AStroke::AStroke()
 
 void AStroke::Update(FVector CursorLocation)
 {
-	FTransform NewStrokeTransform;
+	if (PreviousCursorLocation.IsNearlyZero())
+	{
+		PreviousCursorLocation = CursorLocation;
+		return;
+	}
 
-	// need to do this because the instance transform is in local space
-	FVector LocalCursorLocation = GetTransform().InverseTransformPosition(CursorLocation);
-
-	NewStrokeTransform.SetLocation(LocalCursorLocation);
-	
-	StrokeMeshes->AddInstance(NewStrokeTransform);	 	
+	StrokeMeshes->AddInstance(GetNextSegmentTransform(CursorLocation));
 
 	PreviousCursorLocation = CursorLocation;
 }
@@ -49,12 +48,21 @@ FTransform AStroke::GetNextSegmentTransform(FVector CurrentLocation) const
 
 FVector AStroke::GetNextSegmentScale(FVector CurrentLocation) const
 {
-	return FVector();
+	// in order to get the distance between 2 vectors, subtract the vectors then use the size method
+	// this gives us the size, but only along the 'x' axis of scale	
+	FVector Segment = CurrentLocation - PreviousCursorLocation; // space between point A & point B on the graph
+
+	return FVector(Segment.Size(), 1, 1);
 }
 
 FQuat AStroke::GetNextSegmentRotation(FVector CurrentLocation) const
 {
-	return FQuat();
+	// need to get the segment
+	FVector Segment = CurrentLocation - PreviousCursorLocation;
+	// direction w/ out the length. Of Unit length (1)
+	FVector SegmentNormal = Segment.GetSafeNormal();
+	// need to find the rotation between the forward vector and the segment normal
+	return FQuat::FindBetweenNormals(FVector::ForwardVector, SegmentNormal);
 }
 
 FVector AStroke::GetNextSegmentLocation(FVector CurrentLocation) const
