@@ -50,6 +50,7 @@ void AVRPawn::Save()
 {
 	UVRSaveGame *SG = UVRSaveGame::Create();
 	SG->SetState("Hello World");
+	SG->SerializeFromWorld(GetWorld());
 	SG->Save();
 
 	UE_LOG(LogTemp, Warning, TEXT("Saved Game"));
@@ -60,15 +61,14 @@ void AVRPawn::Load()
 	UVRSaveGame *SG = UVRSaveGame::Load();	
 	if (SG)
 	{
+		SG->DeserializeToWorld(GetWorld());
 		UE_LOG(LogTemp, Warning, TEXT("State is %s"), *SG->GetState());
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Save Game NOT FOUND"));
 	}
-
-	
-
-	
 }
+
+
 

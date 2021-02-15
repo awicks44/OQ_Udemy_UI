@@ -26,8 +26,20 @@ public:
 
 	void SetState(FString NewState) { State = NewState; }
 	FString GetState() { return State; }
+
+	// we aren't modifying the world pointer so we make the param pointe a const
+	void SerializeFromWorld(UWorld * World);
+	// we are going to take state and put it into the world. We are trying the world, so it won't be const
+	void DeserializeToWorld(UWorld * World);
 	
 private: 
 	UPROPERTY()
 	FString State;
+
+	UPROPERTY()
+	TArray<TSubclassOf<class AStroke>> Strokes;
+
+
+private: 
+	void ClearWorld(UWorld * World);
 };
