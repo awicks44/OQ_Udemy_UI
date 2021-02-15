@@ -33,10 +33,6 @@ void AVRPawn::BeginPlay()
 			RightController->SetOwner(this);
 			RightController->SetHand(EControllerHand::Right);
 		}
-
-	
-		UVRSaveGame *SG = UVRSaveGame::Create();
-		SG->Save();
 	}	
 }
 
@@ -46,7 +42,33 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction(TEXT("RightTrigger"), IE_Pressed, this, &AVRPawn::RightTriggerPressed);
 	PlayerInputComponent->BindAction(TEXT("RightTrigger"), IE_Released, this, &AVRPawn::RightTriggerReleased);
+	PlayerInputComponent->BindAction(TEXT("Save"), IE_Released, this, &AVRPawn::Save);
+	PlayerInputComponent->BindAction(TEXT("Load"), IE_Released, this, &AVRPawn::Load);
 }
 
+void AVRPawn::Save()
+{
+	UVRSaveGame *SG = UVRSaveGame::Create();
+	SG->SetState("Hello World");
+	SG->Save();
 
+	UE_LOG(LogTemp, Warning, TEXT("Saved Game"));
+}
+
+void AVRPawn::Load()
+{
+	UVRSaveGame *SG = UVRSaveGame::Load();	
+	if (SG)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("State is %s"), *SG->GetState());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Save Game NOT FOUND"));
+	}
+
+	
+
+	
+}
 

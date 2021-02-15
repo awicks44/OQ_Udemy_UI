@@ -15,3 +15,11 @@ bool UVRSaveGame::Save()
 {
 	return UGameplayStatics::SaveGameToSlot(this, TEXT("Test"), 0);
 }
+
+UVRSaveGame * UVRSaveGame::Load()
+{
+	UVRSaveGame *SaveGame = Cast<UVRSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("Test"), 0));
+	
+	return SaveGame;
+	
+}

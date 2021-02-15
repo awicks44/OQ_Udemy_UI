@@ -21,5 +21,13 @@ public:
 
 	// we have a game now and we want to save it. 
 	bool Save();
+
+	static UVRSaveGame* Load();
+
+	void SetState(FString NewState) { State = NewState; }
+	FString GetState() { return State; }
 	
+private: 
+	UPROPERTY()
+	FString State;
 };
