@@ -3,6 +3,7 @@
 
 #include "VRPawn.h"
 #include "Camera/CameraComponent.h"
+#include "Saving/VRSaveGame.h"
 
 // Sets default values
 AVRPawn::AVRPawn()
@@ -32,6 +33,10 @@ void AVRPawn::BeginPlay()
 			RightController->SetOwner(this);
 			RightController->SetHand(EControllerHand::Right);
 		}
+
+	
+		UVRSaveGame *SG = UVRSaveGame::Create();
+		SG->Save();
 	}	
 }
 
