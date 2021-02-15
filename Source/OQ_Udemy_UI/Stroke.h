@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Saving/VRSaveGame.h"
 #include "Stroke.generated.h"
+
 
 UCLASS()
 class OQ_UDEMY_UI_API AStroke : public AActor
@@ -16,6 +18,11 @@ public:
 	AStroke();
 	
 	void Update(FVector CursorLocation);	
+
+	FStrokeState SerializeToStruct() const;
+	// we make StrokeState const because the state may be very large. This is a static method because it's not actually happening on the instnace of a stroke. The stroke we will be 
+	// deserializing will be coming from the file and not an instance of the world
+	static AStroke *SpawnAndDeserializeFromStruct(UWorld * World, const FStrokeState& StrokeState);
 
 private: 
 
@@ -31,6 +38,7 @@ private:
 	class USceneComponent *Root;	
 
 	FVector PreviousCursorLocation;
+	TArray<FVector> ControlPoints;
 
 	UPROPERTY(VisibleAnywhere)
 	class UInstancedStaticMeshComponent *StrokeMeshes;

@@ -33,11 +33,9 @@ void UVRSaveGame::SerializeFromWorld(UWorld * World)
 	// iterate over all strokes
 	for (TActorIterator<AStroke> StrokeIterator(World); StrokeIterator; ++StrokeIterator)
 	{
-		// TODO: serialize
-		Strokes.Add(StrokeIterator->GetClass());
+		// previously we were getting the actual STroke class and adding them to the strokes array
+		Strokes.Add(StrokeIterator->SerializeToStruct());
 	}
-	
-	// store class type in our array
 }
 
 void UVRSaveGame::DeserializeToWorld(UWorld * World)
@@ -45,9 +43,9 @@ void UVRSaveGame::DeserializeToWorld(UWorld * World)
 	// clear the world
 	ClearWorld(World);
 	// Stroke class will be the BP created in the engine
-	for (TSubclassOf<AStroke> StrokeClass : Strokes)
+	for (FStrokeState StrokeState: Strokes)
 	{
-		World->SpawnActor<AStroke>(StrokeClass);
+		AStroke::SpawnAndDeserializeFromStruct(World, StrokeState);
 	}
 	
 }

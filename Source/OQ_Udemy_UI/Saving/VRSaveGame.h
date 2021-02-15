@@ -6,6 +6,20 @@
 #include "GameFramework/SaveGame.h"
 #include "VRSaveGame.generated.h"
 
+USTRUCT()
+struct FStrokeState
+{
+	GENERATED_BODY() // makes it work for UObject system
+
+	UPROPERTY()
+	// we need to put the state into UProperties
+	// This is part of the 'state' that helps define what a 'stroke is'
+	TSubclassOf<class AStroke> Class;
+
+	// state of Stroke is also made up of Locations
+	UPROPERTY()
+	TArray<FVector> ControlPoints;
+};
 /**
  * 
  */
@@ -37,7 +51,7 @@ private:
 	FString State;
 
 	UPROPERTY()
-	TArray<TSubclassOf<class AStroke>> Strokes;
+	TArray<FStrokeState> Strokes;
 
 
 private: 

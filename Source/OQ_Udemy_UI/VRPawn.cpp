@@ -61,8 +61,7 @@ void AVRPawn::Load()
 	UVRSaveGame *SG = UVRSaveGame::Load();	
 	if (SG)
 	{
-		SG->DeserializeToWorld(GetWorld());
-		UE_LOG(LogTemp, Warning, TEXT("State is %s"), *SG->GetState());
+		SG->DeserializeToWorld(GetWorld());		
 	}
 	else
 	{
