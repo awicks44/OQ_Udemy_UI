@@ -13,5 +13,20 @@ UCLASS()
 class OQ_UDEMY_UI_API AUIPointerHandController : public AHandControllerBase
 {
 	GENERATED_BODY()
+
+public:
+	AUIPointerHandController();
+
+public:
+	/*void Tick(float DeltaTime) override;*/
+	void TriggerPressed() override;
+	void TriggerReleased() override;
 	
+protected:
+	//void BeginPlay() override;
+
+
+private: 
+	UPROPERTY(VisibleAnywhere)
+		class UWidgetInteractionComponent * Pointer;
 };
