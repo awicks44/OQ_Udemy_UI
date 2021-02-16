@@ -16,28 +16,14 @@ AUIPointerHandController::AUIPointerHandController()
 
 }
 
-//void AUIPointerHandController::BeginPlay()
-//{
-//	Super::BeginPlay();
-//}
-//
 void AUIPointerHandController::TriggerPressed()
 {
+	UE_LOG(LogTemp, Warning, TEXT("AUIPointerHandController - TriggerPressed"));
 	Pointer->PressPointerKey(EKeys::LeftMouseButton);
 }
 
 void AUIPointerHandController::TriggerReleased()
 {
+	UE_LOG(LogTemp, Warning, TEXT("AUIPointerHandController - TriggerReleased"));
 	Pointer->ReleasePointerKey(EKeys::LeftMouseButton);
 }
-//
-//void AUIPointerHandController::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//
-//	
-//
-//	UWidgetComponent* HoveredWidget = WidgetInteraction->GetHoveredWidgetComponent();
-//	
-//	
-//}
