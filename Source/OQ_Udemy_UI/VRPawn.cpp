@@ -16,13 +16,19 @@ AVRPawn::AVRPawn()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(VRRoot);
-
 }
 
 // Called when the game starts or when spawned
 void AVRPawn::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// create a new painting every time the scene loads
+	UVRSaveGame * Painting = UVRSaveGame::Create();
+	if (Painting && Painting->Save())
+	{
+		CurrentSlotName = Painting->GetSlotName();
+	}	
 
 	if (PaintBrushHandControllerChildClass)
 	{
@@ -48,17 +54,21 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AVRPawn::Save()
 {
-	UVRSaveGame *SG = UVRSaveGame::Create();
-	SG->SetState("Hello World");
-	SG->SerializeFromWorld(GetWorld());
-	SG->Save();
+	// when user saves, then load the current painting based on the stored slot name
+	UVRSaveGame *Painting = UVRSaveGame::Load(CurrentSlotName);
+	if (Painting)
+	{
+		Painting->SetState("Hello World");
+		Painting->SerializeFromWorld(GetWorld());
+		Painting->Save();
+	}	
 
 	UE_LOG(LogTemp, Warning, TEXT("Saved Game"));
 }
 
 void AVRPawn::Load()
 {
-	UVRSaveGame *SG = UVRSaveGame::Load();	
+	UVRSaveGame *SG = UVRSaveGame::Load(CurrentSlotName);
 	if (SG)
 	{
 		SG->DeserializeToWorld(GetWorld());		

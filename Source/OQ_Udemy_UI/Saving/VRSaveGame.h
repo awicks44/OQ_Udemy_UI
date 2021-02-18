@@ -36,7 +36,7 @@ public:
 	// we have a game now and we want to save it. 
 	bool Save();
 
-	static UVRSaveGame* Load();
+	static UVRSaveGame* Load(FString SlotName);
 
 	void SetState(FString NewState) { State = NewState; }
 	FString GetState() { return State; }
@@ -45,10 +45,15 @@ public:
 	void SerializeFromWorld(UWorld * World);
 	// we are going to take state and put it into the world. We are trying the world, so it won't be const
 	void DeserializeToWorld(UWorld * World);
+
+	FString GetSlotName() const { return SlotName; }
 	
 private: 
 	UPROPERTY()
 	FString State;
+
+	UPROPERTY()
+	FString SlotName;
 
 	UPROPERTY()
 	TArray<FStrokeState> Strokes;
