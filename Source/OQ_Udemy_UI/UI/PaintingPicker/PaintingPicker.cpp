@@ -41,9 +41,9 @@ void APaintingPicker::BeginPlay()
 	{
 		//UVRSaveGame *Painting = UVRSaveGame::Load(Slot);		
 
-		PaintingGridWidget->AddPainting(idx);
+		PaintingGridWidget->AddPainting(idx, Slot);
 
-		++idx;
+		idx++;
 
 	}
 

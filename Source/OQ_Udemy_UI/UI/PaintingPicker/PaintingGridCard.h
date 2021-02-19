@@ -17,5 +17,8 @@ class OQ_UDEMY_UI_API UPaintingGridCard : public UUserWidget
 protected:
 	UPROPERTY(BlueprintReadonly, VisibleAnywhere, meta = (BindWidget))
 	class UTextBlock *SlotName;
+
+public:
+	void SetPaintingName(FString PaintingName);
 	
 };
