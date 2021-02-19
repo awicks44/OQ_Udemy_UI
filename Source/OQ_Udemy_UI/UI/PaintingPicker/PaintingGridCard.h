@@ -18,7 +18,15 @@ protected:
 	UPROPERTY(BlueprintReadonly, VisibleAnywhere, meta = (BindWidget))
 	class UTextBlock *SlotName;
 
+	UPROPERTY(BlueprintReadonly, VisibleAnywhere, meta = (BindWidget))
+	class UButton *CardButton;
+
 public:
 	void SetPaintingName(FString PaintingName);
+
+private:
+	UFUNCTION()
+	void CardButtonClicked();
 	
+	FString PaintingName;
 };
