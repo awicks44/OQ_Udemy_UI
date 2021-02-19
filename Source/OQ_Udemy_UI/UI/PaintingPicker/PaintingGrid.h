@@ -17,7 +17,7 @@ class OQ_UDEMY_UI_API UPaintingGrid : public UUserWidget
 		
 public:
 	UFUNCTION(BlueprintCallable)
-	void AddPainting();
+	void AddPainting(int32 PaintingIdx);
 
 protected:
 	UPROPERTY(BlueprintReadonly, VisibleAnywhere, meta = (BindWidget))

@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "Saving/VRSaveGame.h"
 
+
 // Sets default values
 AVRPawn::AVRPawn()
 {

@@ -2,8 +2,14 @@
 
 
 #include "PaintingPicker.h"
-#include "Engine/World.h"
 #include "PaintingGrid.h"
+#include "../../Saving/PainterSaveGameIndex.h"
+//#include "..../Saving/VRSaveGame.h"
+
+
+
+
+
 
 // Sets default values
 APaintingPicker::APaintingPicker()
@@ -27,9 +33,21 @@ void APaintingPicker::BeginPlay()
 	Super::BeginPlay();
 
 	UPaintingGrid *PaintingGridWidget = Cast<UPaintingGrid>(PaintingGrid->GetUserWidgetObject());
-	if (!PaintingGridWidget) return;
 
-	PaintingGridWidget->AddPainting();
+	if (!PaintingGridWidget) return;
+	
+	int idx = 0;
+	for (FString Slot : UPainterSaveGameIndex::Load()->GetSlotNames())
+	{
+		//UVRSaveGame *Painting = UVRSaveGame::Load(Slot);		
+
+		PaintingGridWidget->AddPainting(idx);
+
+		++idx;
+
+	}
+
+	
 	
 }
 

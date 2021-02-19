@@ -8,7 +8,6 @@
 #include "PainterSaveGameIndex.h"
 #include "Misc/Guid.h"
 
-
 UVRSaveGame * UVRSaveGame::Create()
 {
 	UVRSaveGame *NewSaveGame = Cast<UVRSaveGame>(UGameplayStatics::CreateSaveGameObject(UVRSaveGame::StaticClass()));
@@ -26,12 +25,6 @@ UVRSaveGame * UVRSaveGame::Create()
 
 bool UVRSaveGame::Save()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Painting Index:"));
-	for (FString Slot : UPainterSaveGameIndex::Load()->GetSlotNames())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Painting name: %s"), *Slot);
-	}
-
 	return UGameplayStatics::SaveGameToSlot(this, SlotName, 0);
 }
 
