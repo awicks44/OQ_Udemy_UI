@@ -16,10 +16,15 @@ class OQ_UDEMY_UI_API APaintingGameMode : public AGameModeBase
 
 public:
 	void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+	
+	void Load();
+	void Save(); // saving from here because game mode know the slot
 
 protected:
 	void BeginPlay() override;
 
+public:
+	FString GetSlotName() { return SlotName; }
 
 private:
 	FString SlotName;

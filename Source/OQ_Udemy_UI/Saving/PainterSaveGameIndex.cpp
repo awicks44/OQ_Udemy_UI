@@ -21,6 +21,7 @@ UPainterSaveGameIndex * UPainterSaveGameIndex::Load()
 	auto Index = Cast< UPainterSaveGameIndex>(UGameplayStatics::LoadGameFromSlot(SLOT_NAME, 0));
 	if (!Index)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("UPainterSaveGameIndex Load: Cannot Load Painter Save Game "));
 		Index = Cast<UPainterSaveGameIndex>(UGameplayStatics::CreateSaveGameObject(UPainterSaveGameIndex::StaticClass()));
 		Index->Save();
 	}

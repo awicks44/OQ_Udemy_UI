@@ -45,7 +45,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AHandControllerBase> PaintBrushHandControllerChildClass;	
 
-	FString CurrentSlotName;
+	
 
 
 

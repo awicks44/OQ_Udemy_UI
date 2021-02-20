@@ -12,22 +12,39 @@ void APaintingGameMode::InitGame(const FString & MapName, const FString & Option
 
 	SlotName = UGameplayStatics::ParseOption(Options, TEXT("SlotName"));
 
-	UE_LOG(LogTemp, Warning, TEXT("Data is %s"), *SlotName);
+	UE_LOG(LogTemp, Warning, TEXT("Game Mode Init -> Slot Name: %s"), *SlotName);
 }
 
-void APaintingGameMode::BeginPlay()
+void APaintingGameMode::Save()
 {
-	Super::BeginPlay();
+	UVRSaveGame *Painting = UVRSaveGame::Load(SlotName);
+	if (Painting)
+	{
+		Painting->SerializeFromWorld(GetWorld());
+		Painting->Save();
+	}
+}
 
+
+void APaintingGameMode::Load()
+{
 	UVRSaveGame *SG = UVRSaveGame::Load(SlotName);
 	if (SG)
 	{
 		SG->DeserializeToWorld(GetWorld());
-
-		UStereoLayerFunctionLibrary::HideSplashScreen();
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Game Slot Not found %s"), *SlotName);
+		UE_LOG(LogTemp, Warning, TEXT("Game Mode - Load: Game Slot Not found %s"), *SlotName);
 	}
+}
+
+
+void APaintingGameMode::BeginPlay()
+{
+	Super::BeginPlay();	
+
+	Load();
+
+	UStereoLayerFunctionLibrary::HideSplashScreen();
 }

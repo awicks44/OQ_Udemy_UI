@@ -12,8 +12,13 @@ UVRSaveGame * UVRSaveGame::Create()
 {
 	UVRSaveGame *NewSaveGame = Cast<UVRSaveGame>(UGameplayStatics::CreateSaveGameObject(UVRSaveGame::StaticClass()));
 	NewSaveGame->SlotName = FGuid::NewGuid().ToString();
+
 	//Ensure the game is saved before we add it to the index. if the save fails
-	if (!NewSaveGame->Save()) return nullptr;
+	if (!NewSaveGame->Save())
+	{
+		UE_LOG(LogTemp, Error, TEXT("UVRSaveGame - Create: Could not create initial save game Slot Name %s"), *NewSaveGame->SlotName);
+		return nullptr;
+	}
 
 	// add the save game into the index
 	UPainterSaveGameIndex* Index = UPainterSaveGameIndex::Load();

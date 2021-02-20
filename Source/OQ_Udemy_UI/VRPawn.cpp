@@ -4,6 +4,8 @@
 #include "VRPawn.h"
 #include "Camera/CameraComponent.h"
 #include "Saving/VRSaveGame.h"
+#include "PaintingGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -22,14 +24,7 @@ AVRPawn::AVRPawn()
 // Called when the game starts or when spawned
 void AVRPawn::BeginPlay()
 {
-	Super::BeginPlay();
-
-	// create a new painting every time the scene loads
-	UVRSaveGame * Painting = UVRSaveGame::Create();
-	if (Painting)
-	{
-		CurrentSlotName = Painting->GetSlotName();
-	}	
+	Super::BeginPlay();	
 
 	if (PaintBrushHandControllerChildClass)
 	{
@@ -54,16 +49,13 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AVRPawn::Save()
 {
-	// when user saves, then load the current painting based on the stored slot name
-	UVRSaveGame *Painting = UVRSaveGame::Load(CurrentSlotName);
-	if (Painting)
-	{
-		Painting->SetState("Hello World");
-		Painting->SerializeFromWorld(GetWorld());
-		Painting->Save();
-	}	
+	auto GameMode = Cast<APaintingGameMode>(GetWorld()->GetAuthGameMode());
 
-	UE_LOG(LogTemp, Warning, TEXT("Saved Game"));
+	if (!GameMode) return;
+
+	UE_LOG(LogTemp, Warning, TEXT("VRPawn - Save: SlotName is %s"), *GameMode->GetSlotName());
+
+	GameMode->Save();
 }
 
 
