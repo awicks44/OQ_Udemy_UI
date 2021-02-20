@@ -48,3 +48,10 @@ void APaintingGameMode::BeginPlay()
 
 	UStereoLayerFunctionLibrary::HideSplashScreen();
 }
+
+void APaintingGameMode::SaveAndQuit()
+{
+	Save();
+
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("MainMenu"));
+}

@@ -26,6 +26,9 @@ protected:
 public:
 	FString GetSlotName() { return SlotName; }
 
+	UFUNCTION()
+	void SaveAndQuit();
+
 private:
 	FString SlotName;
 	

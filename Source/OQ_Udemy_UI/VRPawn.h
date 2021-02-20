@@ -23,8 +23,7 @@ protected:
 
 private: 
 	void RightTriggerPressed();
-	void RightTriggerReleased() { RightController->TriggerReleased(); }
-	void Save();	
+	void RightTriggerReleased() { RightController->TriggerReleased(); }	
 
 public:	
 	// Called to bind functionality to input

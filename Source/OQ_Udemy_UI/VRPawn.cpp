@@ -54,21 +54,7 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);	
 
 	PlayerInputComponent->BindAction(TEXT("RightTrigger"), IE_Pressed, this, &AVRPawn::RightTriggerPressed);
-	PlayerInputComponent->BindAction(TEXT("RightTrigger"), IE_Released, this, &AVRPawn::RightTriggerReleased);
-	PlayerInputComponent->BindAction(TEXT("Save"), IE_Released, this, &AVRPawn::Save);
-}
-
-void AVRPawn::Save()
-{
-	auto GameMode = Cast<APaintingGameMode>(GetWorld()->GetAuthGameMode());
-
-	if (!GameMode) return;
-
-	UE_LOG(LogTemp, Warning, TEXT("VRPawn - Save: SlotName is %s"), *GameMode->GetSlotName());
-
-	GameMode->Save();
-
-	UGameplayStatics::OpenLevel(GetWorld(), TEXT("MainMenu"));
+	PlayerInputComponent->BindAction(TEXT("RightTrigger"), IE_Released, this, &AVRPawn::RightTriggerReleased);	
 }
 
 void AVRPawn::RightTriggerPressed()
