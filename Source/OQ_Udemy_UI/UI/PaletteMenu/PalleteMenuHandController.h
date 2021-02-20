@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "../../HandControllerBase.h"
+#include "Components/WidgetComponent.h"
 #include "PalleteMenuHandController.generated.h"
 
 /**
@@ -14,4 +15,11 @@ class OQ_UDEMY_UI_API APalleteMenuHandController : public AHandControllerBase
 {
 	GENERATED_BODY()
 	
+public: 
+	APalleteMenuHandController();
+
+private:
+	//components
+	UPROPERTY(VisibleAnywhere) // to edit in the ditor
+	UWidgetComponent* PaletteMenu;
 };

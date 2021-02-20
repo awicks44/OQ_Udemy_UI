@@ -3,3 +3,8 @@
 
 #include "PalleteMenuHandController.h"
 
+APalleteMenuHandController::APalleteMenuHandController()
+{
+	PaletteMenu = CreateDefaultSubobject<UWidgetComponent>(TEXT("PaletteMenu"));
+	PaletteMenu->SetupAttachment(GetRootComponent());
+}
