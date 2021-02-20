@@ -31,8 +31,6 @@ void APaintBrushHandController::Tick(float DeltaTime)
 
 void APaintBrushHandController::TriggerPressed()
 {
-	//AHandControllerBase::TriggerPressed();
-
 	if (StrokeChildClass)
 	{
 		CurrentStroke = GetWorld()->SpawnActor<AStroke>(StrokeChildClass);
@@ -45,8 +43,6 @@ void APaintBrushHandController::TriggerPressed()
 
 void APaintBrushHandController::TriggerReleased()
 {
-	//AHandControllerBase::TriggerReleased();
-
 	CurrentStroke = nullptr;
 }
 

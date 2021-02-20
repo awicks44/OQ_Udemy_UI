@@ -26,9 +26,9 @@ void AVRPawn::BeginPlay()
 {
 	Super::BeginPlay();	
 
-	if (PaintBrushHandControllerChildClass)
+	if (RightHandControllerChildClass)
 	{
-		RightController = GetWorld()->SpawnActor<AHandControllerBase>(PaintBrushHandControllerChildClass);
+		RightController = GetWorld()->SpawnActor<AHandControllerBase>(RightHandControllerChildClass);
 		if (RightController != nullptr)
 		{
 			RightController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
@@ -36,6 +36,17 @@ void AVRPawn::BeginPlay()
 			RightController->SetHand(EControllerHand::Right);
 		}
 	}	
+
+	if (LeftHandControllerChildClass)
+	{
+		LeftController = GetWorld()->SpawnActor<AHandControllerBase>(LeftHandControllerChildClass);
+		if (LeftController != nullptr)
+		{
+			LeftController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+			LeftController->SetOwner(this);
+			LeftController->SetHand(EControllerHand::Left);
+		}
+	}
 }
 
 void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -60,4 +71,9 @@ void AVRPawn::Save()
 	UGameplayStatics::OpenLevel(GetWorld(), TEXT("MainMenu"));
 }
 
+void AVRPawn::RightTriggerPressed()
+{
+	//UE_LOG(LogTemp, Warning, TEXT("VRPane Trigger")); 
+	RightController->TriggerPressed();
+}
 

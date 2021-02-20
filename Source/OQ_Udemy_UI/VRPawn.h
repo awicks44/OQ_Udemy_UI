@@ -18,11 +18,11 @@ public:
 	AVRPawn();
 
 protected:
-	// Called when the game starts or when spawned
+	// Called when the game starts or wPaintBrushHandControllerChildClasshen spawned
 	virtual void BeginPlay() override;
 
 private: 
-	void RightTriggerPressed() { RightController->TriggerPressed(); }
+	void RightTriggerPressed();
 	void RightTriggerReleased() { RightController->TriggerReleased(); }
 	void Save();	
 
@@ -38,12 +38,17 @@ private:
 	UPROPERTY()
 	AHandControllerBase *RightController;
 
+	UPROPERTY()
+	AHandControllerBase *LeftController;
+
 	UPROPERTY(VisibleAnywhere)
 	class USceneComponent *VRRoot;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AHandControllerBase> RightHandControllerChildClass;	
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AHandControllerBase> PaintBrushHandControllerChildClass;	
+	TSubclassOf<AHandControllerBase> LeftHandControllerChildClass;
 
 	
 
