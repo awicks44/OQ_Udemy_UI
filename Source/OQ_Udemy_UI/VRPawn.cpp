@@ -26,7 +26,7 @@ void AVRPawn::BeginPlay()
 
 	// create a new painting every time the scene loads
 	UVRSaveGame * Painting = UVRSaveGame::Create();
-	if (Painting && Painting->Save())
+	if (Painting)
 	{
 		CurrentSlotName = Painting->GetSlotName();
 	}	
@@ -50,7 +50,6 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction(TEXT("RightTrigger"), IE_Pressed, this, &AVRPawn::RightTriggerPressed);
 	PlayerInputComponent->BindAction(TEXT("RightTrigger"), IE_Released, this, &AVRPawn::RightTriggerReleased);
 	PlayerInputComponent->BindAction(TEXT("Save"), IE_Released, this, &AVRPawn::Save);
-	PlayerInputComponent->BindAction(TEXT("Load"), IE_Released, this, &AVRPawn::Load);
 }
 
 void AVRPawn::Save()
@@ -66,19 +65,5 @@ void AVRPawn::Save()
 
 	UE_LOG(LogTemp, Warning, TEXT("Saved Game"));
 }
-
-void AVRPawn::Load()
-{
-	UVRSaveGame *SG = UVRSaveGame::Load(CurrentSlotName);
-	if (SG)
-	{
-		SG->DeserializeToWorld(GetWorld());		
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Save Game NOT FOUND"));
-	}
-}
-
 
 

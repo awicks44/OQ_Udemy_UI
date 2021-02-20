@@ -24,8 +24,7 @@ protected:
 private: 
 	void RightTriggerPressed() { RightController->TriggerPressed(); }
 	void RightTriggerReleased() { RightController->TriggerReleased(); }
-	void Save();
-	void Load();
+	void Save();	
 
 public:	
 	// Called to bind functionality to input
