@@ -15,6 +15,9 @@ class OQ_UDEMY_UI_API APaintingPicker : public AActor
 public:	
 	// Sets default values for this actor's properties
 	APaintingPicker();
+	
+	void AddPainting();
+	void ToggleDeleteMode();
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,5 +32,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	class USceneComponent *Root;
+
+	void RefreshSlots();
 
 };

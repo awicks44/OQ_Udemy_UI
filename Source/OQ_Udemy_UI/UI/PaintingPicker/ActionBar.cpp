@@ -18,13 +18,3 @@ bool UActionBar::Initialize()
 	
 	return true;
 }
-
-void UActionBar::AddButtonClicked()
-{
-	UE_LOG(LogTemp, Warning, TEXT("add button"));
-}
-
-void UActionBar::TrashButtonClicked()
-{
-	UE_LOG(LogTemp, Warning, TEXT("trash button"));
-}

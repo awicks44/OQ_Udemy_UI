@@ -3,13 +3,9 @@
 
 #include "PaintingPicker.h"
 #include "PaintingGrid.h"
+#include "ActionBar.h"
+#include "../../Saving/VRSaveGame.h"
 #include "../../Saving/PainterSaveGameIndex.h"
-//#include "..../Saving/VRSaveGame.h"
-
-
-
-
-
 
 // Sets default values
 APaintingPicker::APaintingPicker()
@@ -30,24 +26,40 @@ APaintingPicker::APaintingPicker()
 // Called when the game starts or when spawned
 void APaintingPicker::BeginPlay()
 {
-	Super::BeginPlay();
+	Super::BeginPlay();	
 
-	UPaintingGrid *PaintingGridWidget = Cast<UPaintingGrid>(PaintingGrid->GetUserWidgetObject());
-
-	if (!PaintingGridWidget) return;
-	
-	int idx = 0;
-	for (FString Slot : UPainterSaveGameIndex::Load()->GetSlotNames())
+	UActionBar *ActionBarWidget = Cast<UActionBar>(ActionBar->GetUserWidgetObject());
+	if (ActionBarWidget)
 	{
-		//UVRSaveGame *Painting = UVRSaveGame::Load(Slot);		
-
-		PaintingGridWidget->AddPainting(idx, Slot);
-
-		idx++;
-
+		ActionBarWidget->SetParentPicker(this);
 	}
-
 	
+	RefreshSlots();
 	
 }
 
+void APaintingPicker::RefreshSlots()
+{
+	UPaintingGrid *PaintingGridWidget = Cast<UPaintingGrid>(PaintingGrid->GetUserWidgetObject());
+	if (!PaintingGridWidget) return;
+
+	int idx = 0;
+	for (FString Slot : UPainterSaveGameIndex::Load()->GetSlotNames())
+	{
+		PaintingGridWidget->AddPainting(idx, Slot);
+		idx++;
+	}	
+}
+
+void APaintingPicker::AddPainting()
+{
+	// create our initial save game, along with save game index
+	UVRSaveGame::Create();
+
+	RefreshSlots();
+}
+
+void APaintingPicker::ToggleDeleteMode()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Hi"));
+}

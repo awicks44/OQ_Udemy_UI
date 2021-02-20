@@ -56,6 +56,8 @@ void AVRPawn::Save()
 	UE_LOG(LogTemp, Warning, TEXT("VRPawn - Save: SlotName is %s"), *GameMode->GetSlotName());
 
 	GameMode->Save();
+
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("MainMenu"));
 }
 
 

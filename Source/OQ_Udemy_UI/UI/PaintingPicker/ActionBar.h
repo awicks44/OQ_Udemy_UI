@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "PaintingPicker.h"
 #include "ActionBar.generated.h"
 
 /**
@@ -18,6 +19,8 @@ public:
 	
 	bool Initialize() override;
 
+	void SetParentPicker(APaintingPicker * NewParentPicker) { ParentPicker = NewParentPicker; }
+
 protected:
 	UPROPERTY(BlueprintReadonly, VisibleAnywhere, meta = (BindWidget))
 	class UButton *AddButton;
@@ -27,10 +30,13 @@ protected:
 
 private:
 	UFUNCTION()
-	void AddButtonClicked();
+	void AddButtonClicked() { if (ParentPicker) ParentPicker->AddPainting(); }
 
 	UFUNCTION()
-	void TrashButtonClicked();
+	void TrashButtonClicked() { if (ParentPicker) ParentPicker->ToggleDeleteMode(); }
+
+	UPROPERTY()
+	APaintingPicker *ParentPicker;
 
 
 };
