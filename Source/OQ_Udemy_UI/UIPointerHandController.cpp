@@ -8,20 +8,16 @@
 
 AUIPointerHandController::AUIPointerHandController()
 {
-	//PrimaryActorTick.bCanEverTick = true;
-
 	Pointer = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("Pointer"));
 	Pointer->SetupAttachment(GetRootComponent());
 }
 
 void AUIPointerHandController::TriggerPressed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("AUIPointerHandController - TriggerPressed"));
 	Pointer->PressPointerKey(EKeys::LeftMouseButton);
 }
 
 void AUIPointerHandController::TriggerReleased()
-{
-	UE_LOG(LogTemp, Warning, TEXT("AUIPointerHandController - TriggerReleased"));
+{	
 	Pointer->ReleasePointerKey(EKeys::LeftMouseButton);
 }

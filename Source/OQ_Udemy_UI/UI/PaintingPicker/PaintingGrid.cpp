@@ -46,3 +46,8 @@ void UPaintingGrid::AddPaintingPage(bool Active)
 	UHorizontalBoxSlot* BoxSlot = PaginationPages->AddChildToHorizontalBox(PaintingPage);
 	BoxSlot->SetPadding(FMargin(PaintingPageDotPadding, 0));
 }
+
+int32 UPaintingGrid::GetNumberOfSlots() const
+{
+	return PaintingGrid->GetChildrenCount();
+}

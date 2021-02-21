@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/WidgetComponent.h"
+#include "PaintingGrid.h"
 #include "PaintingPicker.generated.h"
 
 UCLASS()
@@ -24,6 +25,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	
+	UPaintingGrid* GetPaintingGrid() const { return Cast<UPaintingGrid>(PaintingGrid->GetUserWidgetObject()); }
+
 	UPROPERTY(VisibleAnywhere)
 	UWidgetComponent *PaintingGrid;
 
@@ -34,5 +38,6 @@ private:
 	class USceneComponent *Root;
 
 	void RefreshSlots();
+	int32 GetNumberOfPages() const;
 
 };

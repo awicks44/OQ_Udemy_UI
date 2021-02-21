@@ -6,6 +6,7 @@
 #include "ActionBar.h"
 #include "../../Saving/VRSaveGame.h"
 #include "../../Saving/PainterSaveGameIndex.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
 APaintingPicker::APaintingPicker()
@@ -26,7 +27,7 @@ APaintingPicker::APaintingPicker()
 // Called when the game starts or when spawned
 void APaintingPicker::BeginPlay()
 {
-	Super::BeginPlay();	
+	Super::BeginPlay();		
 
 	UActionBar *ActionBarWidget = Cast<UActionBar>(ActionBar->GetUserWidgetObject());
 	if (ActionBarWidget)
@@ -40,7 +41,9 @@ void APaintingPicker::BeginPlay()
 
 void APaintingPicker::RefreshSlots()
 {
-	UPaintingGrid *PaintingGridWidget = Cast<UPaintingGrid>(PaintingGrid->GetUserWidgetObject());
+	UE_LOG(LogTemp, Warning, TEXT("Nubmer of Pages: %d"), GetNumberOfPages());
+
+	UPaintingGrid *PaintingGridWidget = GetPaintingGrid();
 	if (!PaintingGridWidget) return;
 
 	PaintingGridWidget->AddPaintingPage(true);
@@ -67,8 +70,22 @@ void APaintingPicker::AddPainting()
 
 void APaintingPicker::ToggleDeleteMode()
 {
-	UPaintingGrid *PaintingGridWidget = Cast<UPaintingGrid>(PaintingGrid->GetUserWidgetObject());
+	UPaintingGrid *PaintingGridWidget = GetPaintingGrid();
 	if (!PaintingGridWidget) return;
 
 	PaintingGridWidget->ClearPaintings();
+}
+
+
+int32 APaintingPicker::GetNumberOfPages() const
+{
+	UPaintingGrid *PaintingGridWidget = GetPaintingGrid();
+	
+	if (!PaintingGridWidget) return 0;
+
+	int32 TotalNumberOfSlots = UPainterSaveGameIndex::Load()->GetSlotNames().Num();
+	
+	int32 SlotsPerPage = PaintingGridWidget->GetNumberOfSlots();
+	
+	return FMath::CeilToFloat((float)TotalNumberOfSlots / SlotsPerPage);
 }

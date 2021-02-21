@@ -23,6 +23,7 @@ public:
 	void AddPainting(int32 PaintingIdx, FString PaintingName);
 	void AddPaintingPage(bool Active);
 	void ClearPaintings();
+	int32 GetNumberOfSlots() const;
 
 protected:
 	UPROPERTY(BlueprintReadonly, VisibleAnywhere, meta = (BindWidget))
