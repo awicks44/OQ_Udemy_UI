@@ -37,4 +37,7 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UPaintingPage> PaintingPageClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	float PaintingPageDotPadding = 8;
 };

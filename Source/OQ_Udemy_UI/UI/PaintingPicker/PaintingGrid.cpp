@@ -5,6 +5,7 @@
 #include "Components/PanelWidget.h"
 #include "Components/SizeBox.h"
 #include "Components/PanelWidget.h"
+#include "Components/HorizontalBoxSlot.h"
 
 void UPaintingGrid::AddPainting(int32 PaintingIdx, FString PaintingName)
 {
@@ -39,7 +40,7 @@ void UPaintingGrid::AddPaintingPage(bool Active)
 	if (!PaginationPages) return;
 
 	auto PaintingPage = CreateWidget<UPaintingPage>(GetWorld(), PaintingPageClass);
-	if (!PaintingPage) return;
-
-	PaginationPages->AddChild(PaintingPage);
+	if (!PaintingPage) return;	
+	UHorizontalBoxSlot* BoxSlot = PaginationPages->AddChildToHorizontalBox(PaintingPage);
+	BoxSlot->SetPadding(FMargin(PaintingPageDotPadding, 0));
 }
