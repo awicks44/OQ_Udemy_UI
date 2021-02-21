@@ -48,19 +48,22 @@ void APaintingPicker::UpdateCurrentPage(int32 Offset)
 
 void APaintingPicker::RefreshSlots()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Nubmer of Pages: %d"), GetNumberOfPages());
-
 	UPaintingGrid *PaintingGridWidget = GetPaintingGrid();
 	if (!PaintingGridWidget) return;	
 
 	PaintingGridWidget->ClearPaintings();
 
-	int idx = 0;
-	for (FString Slot : UPainterSaveGameIndex::Load()->GetSlotNames())
+	//start offset -  where in the list of slot names should i start displaying from. Where should I start getting the slots from
+	// first page = 0; on the nex tpage, you should start getting it from slot 9 because 8 is the last slot that's displayed	
+	int32 StartOffset = CurrentPage * PaintingGridWidget->GetNumberOfSlots();
+
+	TArray<FString> Slots = UPainterSaveGameIndex::Load()->GetSlotNames();
+
+	
+	for (int32 i = 0; i < PaintingGridWidget->GetNumberOfSlots() && StartOffset + i < Slots.Num(); i++)
 	{
-		PaintingGridWidget->AddPainting(idx, Slot);
-		idx++;
-	}	
+		PaintingGridWidget->AddPainting(i, Slots[StartOffset + i]);
+	}
 }
 
 void APaintingPicker::RefreshDots()
@@ -72,7 +75,6 @@ void APaintingPicker::RefreshDots()
 
 	for (int i = 0; i < GetNumberOfPages(); i++)
 	{
-		// we can doa  cur
 		PaintingGridWidget->AddPaintingPage(CurrentPage == i);
 	}
 }
