@@ -3,6 +3,15 @@
 
 #include "WidgetTouchingComponent.h"
 #include "Components/WidgetInteractionComponent.h"
+//
+//void UWidgetTouchingComponent::OnComponentCreated()
+//{
+//	Super::OnComponentCreated();
+//
+//	InteractionDistance = 5.0f;
+//
+//
+//}
 
 void UWidgetTouchingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {

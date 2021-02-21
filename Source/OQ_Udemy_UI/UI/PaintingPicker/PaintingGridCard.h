@@ -22,7 +22,7 @@ protected:
 	class UButton *CardButton;
 
 public:
-	void SetPaintingName(FString PaintingName);
+	void SetPaintingName(FString PaintingName);	
 
 private:
 	UFUNCTION()

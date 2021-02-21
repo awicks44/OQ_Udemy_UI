@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/UniformGridPanel.h"
 #include "PaintingGridCard.h"
+#include "PaintingPage.h"
+#include "Components/HorizontalBox.h"
 #include "PaintingGrid.generated.h"
 
 /**
@@ -19,15 +21,20 @@ class OQ_UDEMY_UI_API UPaintingGrid : public UUserWidget
 public:
 	UFUNCTION(BlueprintCallable)
 	void AddPainting(int32 PaintingIdx, FString PaintingName);
-
+	void AddPaintingPage(bool Active);
 	void ClearPaintings();
 
 protected:
 	UPROPERTY(BlueprintReadonly, VisibleAnywhere, meta = (BindWidget))
 	UUniformGridPanel *PaintingGrid;
 
+	UPROPERTY(BlueprintReadonly, VisibleAnywhere, meta = (BindWidget))
+	UHorizontalBox* PaginationPages;
+
 private: 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UPaintingGridCard> GridCardClass;
 	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UPaintingPage> PaintingPageClass;
 };

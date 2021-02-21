@@ -12,8 +12,6 @@ AUIPointerHandController::AUIPointerHandController()
 
 	Pointer = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("Pointer"));
 	Pointer->SetupAttachment(GetRootComponent());
-	
-
 }
 
 void AUIPointerHandController::TriggerPressed()

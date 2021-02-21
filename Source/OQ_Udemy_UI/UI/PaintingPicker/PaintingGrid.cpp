@@ -33,3 +33,13 @@ void UPaintingGrid::ClearPaintings()
 		CardContainer->ClearChildren();
 	}
 }
+
+void UPaintingGrid::AddPaintingPage(bool Active)
+{
+	if (!PaginationPages) return;
+
+	auto PaintingPage = CreateWidget<UPaintingPage>(GetWorld(), PaintingPageClass);
+	if (!PaintingPage) return;
+
+	PaginationPages->AddChild(PaintingPage);
+}

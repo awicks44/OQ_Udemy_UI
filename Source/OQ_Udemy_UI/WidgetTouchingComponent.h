@@ -15,6 +15,7 @@ class OQ_UDEMY_UI_API UWidgetTouchingComponent : public UWidgetInteractionCompon
 	GENERATED_BODY()
 
 public:	
+	/*void OnComponentCreated() override;*/
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
 	void Clicked();
 	void Released();
