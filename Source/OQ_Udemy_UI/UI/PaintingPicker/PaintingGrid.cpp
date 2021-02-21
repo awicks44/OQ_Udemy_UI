@@ -41,6 +41,8 @@ void UPaintingGrid::AddPaintingPage(bool Active)
 
 	auto PaintingPage = CreateWidget<UPaintingPage>(GetWorld(), PaintingPageClass);
 	if (!PaintingPage) return;	
+
+	PaintingPage->SetActive(Active);
 	UHorizontalBoxSlot* BoxSlot = PaginationPages->AddChildToHorizontalBox(PaintingPage);
 	BoxSlot->SetPadding(FMargin(PaintingPageDotPadding, 0));
 }

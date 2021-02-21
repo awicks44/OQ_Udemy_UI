@@ -43,7 +43,7 @@ void APaintingPicker::RefreshSlots()
 	UPaintingGrid *PaintingGridWidget = Cast<UPaintingGrid>(PaintingGrid->GetUserWidgetObject());
 	if (!PaintingGridWidget) return;
 
-	PaintingGridWidget->AddPaintingPage(false);
+	PaintingGridWidget->AddPaintingPage(true);
 	PaintingGridWidget->AddPaintingPage(false);
 	PaintingGridWidget->AddPaintingPage(false);
 

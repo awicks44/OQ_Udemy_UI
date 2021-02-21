@@ -4,4 +4,7 @@
 #include "PaintingPage.h"
 
 
-
+void UPaintingPage::SetActive(bool Active)
+{
+	DotImage->SetOpacity(Active ? 1 : DisabledOpacity);
+}
