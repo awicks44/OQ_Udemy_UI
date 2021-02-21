@@ -28,8 +28,7 @@ void UPaintingGrid::ClearPaintings()
 	{
 		USizeBox *CardContainer = Cast<USizeBox>(PaintingGrid->GetChildAt(i));
 		// if somehow a size box is not returned then skip this item and go to next loop iteration
-		if (!CardContainer) continue;
-		
+		if (!CardContainer) continue;		
 		
 		CardContainer->ClearChildren();
 	}
@@ -45,6 +44,13 @@ void UPaintingGrid::AddPaintingPage(bool Active)
 	PaintingPage->SetActive(Active);
 	UHorizontalBoxSlot* BoxSlot = PaginationPages->AddChildToHorizontalBox(PaintingPage);
 	BoxSlot->SetPadding(FMargin(PaintingPageDotPadding, 0));
+}
+
+void UPaintingGrid::ClearPaginationDots()
+{
+	if (!PaginationPages) return;
+
+	PaginationPages->ClearChildren();
 }
 
 int32 UPaintingGrid::GetNumberOfSlots() const

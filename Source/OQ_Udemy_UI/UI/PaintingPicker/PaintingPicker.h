@@ -37,7 +37,12 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class USceneComponent *Root;
 
+	void Refresh() { RefreshSlots(); RefreshDots(); }
 	void RefreshSlots();
+	void RefreshDots();
 	int32 GetNumberOfPages() const;
+
+	UPROPERTY(EditAnywhere)
+	int32 CurrentPage = 0;
 
 };
