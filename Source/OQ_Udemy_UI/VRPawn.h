@@ -24,6 +24,8 @@ protected:
 private: 
 	void RightTriggerPressed();
 	void RightTriggerReleased() { RightController->TriggerReleased(); }	
+	void PaginateRightAxis(float AxisValue);
+	void UpdateCurrentPage(int32 Offset);
 
 public:	
 	// Called to bind functionality to input
@@ -43,11 +45,16 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class USceneComponent *VRRoot;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AHandControllerBase> RightHandControllerChildClass;	
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AHandControllerBase> LeftHandControllerChildClass;
+
+	UPROPERTY(EditDefaultsOnly)
+		float PaginationThumbstickThreshold;
+
+	int32 LastPaginationValue = 0;
 
 	
 

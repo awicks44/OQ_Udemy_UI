@@ -39,6 +39,13 @@ void APaintingPicker::BeginPlay()
 	
 }
 
+void APaintingPicker::UpdateCurrentPage(int32 Offset)
+{
+	CurrentPage = FMath::Clamp(CurrentPage + Offset, 0, GetNumberOfPages() - 1);
+
+	Refresh();
+}
+
 void APaintingPicker::RefreshSlots()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Nubmer of Pages: %d"), GetNumberOfPages());
@@ -99,3 +106,4 @@ int32 APaintingPicker::GetNumberOfPages() const
 	
 	return FMath::CeilToFloat((float)TotalNumberOfSlots / SlotsPerPage);
 }
+
